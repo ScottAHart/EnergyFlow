@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class MenuState : GameState
 {
-    private const string SCENENAME = "MainMenu";
+    private const string SCENENAME = "Menu";
     public override async Task OnEnter(GameState previous = null)
     {
         Debug.Log("Entered Menu");

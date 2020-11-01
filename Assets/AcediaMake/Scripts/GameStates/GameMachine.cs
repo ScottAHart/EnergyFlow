@@ -19,7 +19,7 @@ public class GameMachine : MonoBehaviour
     [SerializeField]
     private State startState = State.Inital;
     private GameState initalState;
-    private Loading loading;
+    [SerializeField] private Loading loading = null;
     public Loading Loading => loading;
 
     private void Awake()
@@ -27,7 +27,6 @@ public class GameMachine : MonoBehaviour
         if (GameMachine.Instance == null && GameMachine.Instance != this)
         {
             instance = this;
-            loading = FindObjectOfType<Loading>();
             initalState = CreateState(startState);
             ForceState(initalState);
         }

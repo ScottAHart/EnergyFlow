@@ -7,11 +7,12 @@ public class InitalState : GameState
 {
     private const string SCENENAME = "InitalScene";
     SplashUI splash;
+    GameMachine gm;
     public override async Task OnEnter(GameState previous = null)
     {
         Debug.Log("Entered Inital");
-
-        await GameMachine.Instance.Loading.Deactive();
+        gm = GameMachine.Instance;
+        await gm.Loading.Deactive();
         splash = GameObject.FindObjectOfType<SplashUI>();
         if (splash == null) throw new System.Exception("Splash UI not found in current scene");
         await splash.Show();
