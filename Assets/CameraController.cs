@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
         if (currentFocus != null)
         {
             Vector3 targetPos = currentFocus.position + offset;
-            float moveSpeed = speed * tweenCurve.Evaluate(Mathf.Clamp((Vector3.Distance(targetPos, this.transform.position) / tweenDist), 0, 1));
+            float moveSpeed = speed * tweenCurve.Evaluate(Mathf.Clamp((Vector3.Distance(targetPos, this.transform.position)), 0, tweenDist)/tweenDist);
             Vector3 moveAmount = (targetPos - this.transform.position).normalized * moveSpeed * Time.deltaTime;
             this.transform.position = this.transform.position + moveAmount;
         }
