@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyPool : GameObjectPooler<Enemy>
+public class BotPool : GameObjectPooler<LaneBot>
 {
 }

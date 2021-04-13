@@ -10,7 +10,7 @@ public class EnemySpawner : MonoBehaviour
     Transform endPoint;
 
     [SerializeField]
-    EnemyPool testEnemyPool;
+    BotPool testEnemyPool;
     //EnemyPool ePool2; ect
 
     private void Awake()
@@ -21,7 +21,7 @@ public class EnemySpawner : MonoBehaviour
     [ContextMenu("SpawnTest")]
     public void TestSpawn()
     {
-        Enemy newEnemy = testEnemyPool.GetObject();
+        LaneBot newEnemy = testEnemyPool.GetObject();
         if (newEnemy == null) return;
         newEnemy.Spawn(spawnPoint.transform, endPoint);
     }

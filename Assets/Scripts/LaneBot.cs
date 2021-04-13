@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : MonoBehaviour, IPoolable
+public class LaneBot : MonoBehaviour, IPoolable
 {
     public event Action<IPoolable> DespawnEvent;
     private NavMeshAgent navAgent = null;
