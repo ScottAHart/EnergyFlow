@@ -1,25 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[DisallowMultipleComponent]
 public class TowerController : MonoBehaviour
 {
-    [SerializeField] private List<TowerBattery> batteries = new List<TowerBattery>();
+    [SerializeField] private TowerBattery battery = null;
     private void Start()
     {
-        batteries = new List<TowerBattery>(this.GetComponents<TowerBattery>());
+        battery = this.GetComponent<TowerBattery>();
     }
     public void AddEnergy(int amount)
     {
-        int amountLeft = amount;
-        foreach(var bat in batteries)
-        {
-            amountLeft = bat.AddEnergy(amountLeft);
-        }
+        battery.AddEnergy(amount);
     }
     public int RequestEnergy(int amount)
     {
-        return 0;
+        return battery.PullEnergy(amount);
     }
 }
 

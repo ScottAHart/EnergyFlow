@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(TowerController))]
+[RequireComponent(typeof(TowerController)), DisallowMultipleComponent]
 
 public class TowerGenerator : MonoBehaviour
 {

@@ -5,7 +5,6 @@ using UnityEngine;
 
 public abstract class GameObjectPooler<T> : MonoBehaviour where T : MonoBehaviour, IPoolable
 {
-
     [SerializeField]
     private int poolSize = 10;
 
@@ -22,11 +21,12 @@ public abstract class GameObjectPooler<T> : MonoBehaviour where T : MonoBehaviou
     [SerializeField]
     int expandSize = 10;
 
-    public void CreatePool(int poolSize)
+    public void CreatePool(int poolSize = -1)
     {
+        
         activePool = new List<T>();
         inactivePool = new List<T>();
-        AddToPool(poolSize);
+        AddToPool(poolSize < 0 ? this.poolSize : poolSize);
     }
     protected virtual void AddToPool(int amount = 1)
     {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IHittable
 {
     InputStrat inputStrat;
     NavMeshAgent navMeshAgent;
@@ -18,20 +18,29 @@ public class PlayerController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hitInfo))
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, 1000, LayerMask.GetMask("Ground")))
             {
                 if (hitInfo.transform.tag == "Ground")
                 {
                     navMeshAgent.SetDestination(hitInfo.point);
-                    
+
                 }
                 else
                 {
-                    
+
                 }
             }
         }
+
+    }
+    public bool Hit(int amount)
+    {
+        Debug.Log("Hit", this);
+        return false;
+    }
 }
+
+
 
 public abstract class InputStrat {
     public abstract void Update();
@@ -41,8 +50,8 @@ public class TopDownInput : InputStrat
 {
     public override void Update()
     {
-       
-        }
+
+
     }
 }
 

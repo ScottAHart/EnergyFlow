@@ -8,3 +8,8 @@ public interface IUI
     Task Show();
     Task Hide();
 }
+
+public interface IHittable
+{
+    bool Hit(int amount);
+}

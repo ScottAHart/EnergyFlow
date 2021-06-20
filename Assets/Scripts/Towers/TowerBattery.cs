@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(TowerController))]
+[RequireComponent(typeof(TowerController)), DisallowMultipleComponent]
 public class TowerBattery : MonoBehaviour
 {   
     [SerializeField] int storageCap = 100;
     [SerializeField] int currentStored = 0;
-    [SerializeField] int maxAddAmount = 10;
+    [SerializeField] int transferAmount = 10;
     /// <summary>
     /// Add energy to battery
     /// </summary>
@@ -17,7 +17,7 @@ public class TowerBattery : MonoBehaviour
     {
         if(currentStored < storageCap)
         {
-            int toAdd = Mathf.Min(amount, maxAddAmount);
+            int toAdd = Mathf.Min(amount, transferAmount);
             if (toAdd + currentStored > storageCap)
                 toAdd = storageCap - currentStored;
             currentStored += toAdd;
