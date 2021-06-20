@@ -23,6 +23,11 @@ public class PlayerController : MonoBehaviour
                 if (hitInfo.transform.tag == "Ground")
                 {
                     navMeshAgent.SetDestination(hitInfo.point);
+                    
+                }
+                else
+                {
+                    
                 }
             }
         }

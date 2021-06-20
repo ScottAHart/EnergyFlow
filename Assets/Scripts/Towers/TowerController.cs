@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class TowerController : MonoBehaviour
 {
-    List<ITowerPart> parts = new List<ITowerPart>();
-    void Start()
+    [SerializeField] private List<TowerBattery> batteries = new List<TowerBattery>();
+    private void Start()
     {
-        parts = new List<ITowerPart>(GetComponentsInChildren<ITowerPart>());
+        batteries = new List<TowerBattery>(this.GetComponents<TowerBattery>());
+    }
+    public void AddEnergy(int amount)
+    {
+        int amountLeft = amount;
+        foreach(var bat in batteries)
+        {
+            amountLeft = bat.AddEnergy(amountLeft);
+        }
+    }
+    public int RequestEnergy(int amount)
+    {
+        return 0;
     }
 }
-public interface ITowerPart
-{
-    void SetUp(TowerController controller);
-    void Breakdown();
-}
+
