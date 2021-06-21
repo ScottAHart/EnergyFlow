@@ -28,25 +28,16 @@ public class TowerBattery : MonoBehaviour
             return amount;
         }
     }
-    public int PullEnergy(int reqAmount)
+    public bool PullEnergy(int reqAmount)
     {
-        if (currentStored > 0)
+        if (currentStored > reqAmount)
         {
-            if (currentStored > reqAmount)
-            {
-                currentStored -= reqAmount;
-                return reqAmount;
-            }
-            else
-            {
-                int cur = currentStored;
-                currentStored = 0;
-                return cur;
-            }
+            currentStored -= reqAmount;
+            return true;
         }
         else
         {
-            return 0;
+            return false;
         }
     }
 }

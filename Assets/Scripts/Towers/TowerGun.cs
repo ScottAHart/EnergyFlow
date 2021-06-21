@@ -1,43 +1,34 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(TowerController)), DisallowMultipleComponent]
 public class TowerGun : MonoBehaviour
 {
     [SerializeField] int energyNeeded = 5;
+    public int EnergyNeeded => energyNeeded;
     [SerializeField] int fireRate = 1;
     [SerializeField] int damage = 1;
-    int tempCap = 0;
+
+
+    private UnityEvent readyToFireEvent = new UnityEvent();
+    public UnityEvent ReadyToFireEvent => readyToFireEvent;
+
     float fireTimer = 0;
-    private IHittable target = null;
+    private IHittable currentTarget = null;
     private List<IHittable> possibleTargets = new List<IHittable>();
-    TowerController tc = null;
-    void Start()
-    {
-        tc = GetComponent<TowerController>();
-    }
+    
+
     void Update()
     {
-        if (target != null)
+        if (currentTarget != null)
         {
-            if (fireTimer > fireRate)
-            {
-                int pullAmount = tc.RequestEnergy(energyNeeded - tempCap);
-                if ((pullAmount + tempCap) >= energyNeeded)
-                {
-                    tempCap = 0;
-                    Fire();
-                }
-                else
-                {
-                    tempCap += pullAmount;
-                    fireTimer = 0;
-                }
-            }
-            else
+            if (fireTimer < fireRate)
             {
                 fireTimer += Time.deltaTime;
+                if (fireTimer >= fireRate)
+                    readyToFireEvent.Invoke();
             }
         }
     }
@@ -47,9 +38,9 @@ public class TowerGun : MonoBehaviour
         IHittable hittable = other.GetComponent<IHittable>();
         if (other.tag != "Tower" && hittable != null)
         {
-            if (target == null)
+            if (currentTarget == null)
             {
-                target = hittable;
+                currentTarget = hittable;
             }
             else
             {
@@ -65,7 +56,7 @@ public class TowerGun : MonoBehaviour
         IHittable hittable = other.GetComponent<IHittable>();
         if (other.tag != "Tower" && hittable != null)
         {
-            if (target == hittable)
+            if (currentTarget == hittable)
             {
                 NextTarget();
             }
@@ -83,7 +74,7 @@ public class TowerGun : MonoBehaviour
         if (possibleTargets.Count > 0)
         {
             SetTarget(possibleTargets[0]);
-            possibleTargets.Remove(target);
+            possibleTargets.Remove(currentTarget);
         }
         else
         {
@@ -92,14 +83,17 @@ public class TowerGun : MonoBehaviour
     }
     private void SetTarget(IHittable hitable)
     {
-        target = hitable;
+        currentTarget = hitable;
         fireTimer = 0;
     }
-    private void Fire()
+    //public void SetTarget(Vector3 pos)
+    //{
+
+    //}
+    public void Fire()
     {
-        Debug.Log("Fire Gun - ", this);
         fireTimer = 0;
-        if (target.Hit(damage))
+        if (currentTarget.Hit(damage))
         {
             NextTarget();
         }
