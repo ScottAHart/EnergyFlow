@@ -92,6 +92,7 @@ public class TowerGun : MonoBehaviour
     //}
     public void Fire()
     {
+        Debug.Log("Tower gun fire", this);
         fireTimer = 0;
         if (currentTarget.Hit(damage))
         {

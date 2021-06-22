@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class TowerTransmitter : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] TowerController otherTower;
+    public TowerController OtherTower => otherTower;
 
-    // Update is called once per frame
-    void Update()
+    public bool PullEnergy(int amount, TowerController source)
     {
-        
-    }
+        Debug.Log("Pull Energy");
+        if (otherTower != source)
+            return otherTower.PullEnergy(amount);
+        else
+        {
+            Debug.Log("Cyclic Pull");
+            return false;
+        }
+    } 
 }
