@@ -11,7 +11,7 @@ public class TowerTransmitter : MonoBehaviour
     {
         Debug.Log("Pull Energy");
         if (otherTower != source)
-            return otherTower.PullEnergy(amount);
+            return otherTower.PullEnergy(amount, source);
         else
         {
             Debug.Log("Cyclic Pull");

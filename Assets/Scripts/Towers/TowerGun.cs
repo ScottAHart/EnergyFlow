@@ -4,16 +4,15 @@ using UnityEngine;
 using UnityEngine.Events;
 
 [RequireComponent(typeof(TowerController)), DisallowMultipleComponent]
-public class TowerGun : MonoBehaviour
+public class TowerGun : MonoBehaviour, ITowerGun
 {
     [SerializeField] int energyNeeded = 5;
-    public int EnergyNeeded => energyNeeded;
+    public int EnergyNeeded() => energyNeeded;
     [SerializeField] int fireRate = 1;
     [SerializeField] int damage = 1;
 
 
-    private UnityEvent readyToFireEvent = new UnityEvent();
-    public UnityEvent ReadyToFireEvent => readyToFireEvent;
+    public event UnityAction ReadyToFireEvent;
 
     float fireTimer = 0;
     private IHittable currentTarget = null;
@@ -28,7 +27,7 @@ public class TowerGun : MonoBehaviour
             {
                 fireTimer += Time.deltaTime;
                 if (fireTimer >= fireRate)
-                    readyToFireEvent.Invoke();
+                    ReadyToFireEvent.Invoke();
             }
         }
     }
@@ -99,4 +98,10 @@ public class TowerGun : MonoBehaviour
             NextTarget();
         }
     }
+}
+
+public interface ITowerGun : ITowerAction
+{
+    event UnityAction ReadyToFireEvent;
+    void Fire();
 }
